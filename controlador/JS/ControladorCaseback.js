@@ -14,5 +14,5 @@ document.getElementById('casebackForm').addEventListener('submit', function(even
     // Redirecciona después de 500ms para asegurar que se guarde el valor
     setTimeout(() => {
         window.location.href = '../../vista/HTML/HOME.html';
-    }, 5000);
+    }, 50000);
 });

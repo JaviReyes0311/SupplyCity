@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SupplyCity</title>
+    <link rel="stylesheet" href="../CSS/EstiloSignup.css">
+    <script src="../../controlador/JS/ControladorSignup.js" defer></script>    
+</head>
+<body id="Cuerpo">
+    <div id="superior"><img src="../IMAGES/LogoAzul.jpg" id="ImagenSup"></div>
+    <section id="cajaReg">
+        <div id="cajaTabla">
+            <form id="signupForm" class="form" action="../../controlador/php/InsertarUsuario.php" method="POST">
+                <p id="heading">SIGN UP</p>
+                <button class="close-btn">×</button>
+                <label>Nombre(s)</label>
+                <div class="field">
+                    <input name="nombre" autocomplete="off" placeholder="Nombre" class="input-field" type="text" required>
+                </div>
+                <label>Apellido(s)</label>
+                <div class="field">
+                    <input name="apellido" autocomplete="off" placeholder="Apellido" class="input-field" type="text" required>
+                </div>
+                <label>E-mail</label>
+                <div class="field">
+                    <input name="email" autocomplete="off" placeholder="Email" class="input-field" type="email" required>
+                </div>
+                <label>Password</label>
+                <div class="field">
+                    <input name="password" placeholder="Password" class="input-field" type="password" required>
+                </div>
+                <label>Confirm Password</label>
+                <div class="field">
+                    <input name="confirm_password" placeholder="Confirm Password" class="input-field" type="password" required>
+                </div>
+                <input type="hidden" name="tipo_usuario" value="Usuario">
+                <div class="bton">
+                    <button type="submit" class="button1" id="SignUp">Sign Up</button>
+                </div>
+            </form>
+        </div>
+        <div id="LoadSpace"></div>
+    </section>
+    <section id="softwareInfo">
+        <p class="textinf">SupplyCity</p>
+        <p class="textinf">beta version</p>
+    </section>    
+</body>
+</html>

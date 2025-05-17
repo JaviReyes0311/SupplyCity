@@ -1,0 +1,153 @@
+/* Reset básico para html y body */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita scroll horizontal no deseado */
+}
+
+/* Contenedor principal (flex para organización) */
+#Cuerpo {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    padding-top: 0; /* Elimina padding-top para el menú fijo */
+}
+
+/* Menú fijo a la izquierda */
+#Menu {
+    position: fixed; /* Fija el menú */
+    left: 10px;     /* Margen izquierdo */
+    top: 10px;      /* Margen superior */
+    width: 15%;     /* Ancho del menú */
+    height: calc(100vh - 20px); /* Altura total - márgenes (10px + 10px) */
+    border-radius: 15px; /* Bordes redondeados */
+    overflow: hidden;    /* Para que los bordes redondeados funcionen */
+    background-color: #004aad; /* Color de fondo (opcional aquí o en #menuBox) */
+    z-index: 1000;      /* Asegura que el menú esté sobre otros elementos */
+}
+
+/* Contenedor interno del menú (opcional si necesitas más estilos) */
+#menuBox {
+    height: 100%;
+    width: 100%;
+    padding: 30px 10px; /* Más espacio arriba/abajo (20px) que en los lados (10px) */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye el espacio entre elementos */
+    align-items: center;
+    gap: 10px; /* Espacio uniforme entre botones (opcional) */
+}
+/* Área de contenido scrollable */
+#Page {
+    justify-content: space-between;
+    display: flex;
+    flex: 1;
+    margin-left: calc(15% + 20px); /* Ancho del menú + margen izquierdo (10px + 10px) */
+    padding: 10px; /* Espacio interno */
+    border-radius: 15px; /* Bordes redondeados (opcional) */
+    background-color: #ffffff; /* Color de fondo */
+    min-height: 100vh; /* Altura mínima */
+    overflow-y: auto;  /* Habilita scroll vertical si el contenido excede la altura */
+    flex-direction: row;
+}
+#SoftwareInfo{
+    width: 10%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+}
+#ImagenSup{
+    width: 100%;
+}
+#ImagenSup:hover{
+    opacity: 40%;
+    cursor: pointer;
+}
+#UserInfo{
+    width: 85%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.menubtn{
+color: #699cf2;
+background-color: white;
+width: 85%;
+height: 8%;
+border: solid, #004aad, 1px;
+border-radius: 10px 10px 10px 10px;
+
+}
+.menubtn:hover{
+color: white;
+background-color: black;
+width: 85%;
+height: 8%;
+border: solid, #004aad, 1px;
+cursor: pointer;
+}
+#home{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #004aad;
+    font-size: 2em;
+}
+#Caseback{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #699cf2;
+    margin-top: -3%;
+}
+#UserName{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: black;
+    margin-top: -.5%;
+}
+#ShiftTime{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: black;
+    
+}
+#TotalSell{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: black;
+    margin-top: -.3%;
+}
+#ShiftBox {
+    display: flex;
+    width: 100%;
+    height: 30%;
+    justify-content: center;
+    gap: 20px; /* Espacio entre botones */
+    align-items: center; /* Centra verticalmente los botones */
+}
+
+.Btn {
+    color: white;
+    background-color: #004aad;
+    height: 50%; /* Ajusta la altura para que no toque los bordes del contenedor */
+    width: 15%;
+    border: 1px solid #004aad; /* Corrección de sintaxis: usa "1px solid #color" */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.Btn:hover {
+    background-color: #003a8c; /* Efecto hover oscuro */
+}
+#UserImg:hover{
+    cursor: pointer;
+    opacity: 50%;
+}
+
+#InfoSoftware{
+    color: #003a8c;
+}

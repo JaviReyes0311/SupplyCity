@@ -1,0 +1,159 @@
+/* Reset básico para html y body */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita scroll horizontal no deseado */
+}
+
+/* Contenedor principal (flex para organización) */
+#Cuerpo {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    padding-top: 0; /* Elimina padding-top para el menú fijo */
+}
+
+/* Menú fijo a la izquierda */
+#Menu {
+    position: fixed; /* Fija el menú */
+    left: 10px;     /* Margen izquierdo */
+    top: 10px;      /* Margen superior */
+    width: 15%;     /* Ancho del menú */
+    height: calc(100vh - 20px); /* Altura total - márgenes (10px + 10px) */
+    border-radius: 15px; /* Bordes redondeados */
+    overflow: hidden;    /* Para que los bordes redondeados funcionen */
+    background-color: #004aad; /* Color de fondo (opcional aquí o en #menuBox) */
+    z-index: 1000;      /* Asegura que el menú esté sobre otros elementos */
+}
+
+/* Contenedor interno del menú (opcional si necesitas más estilos) */
+#menuBox {
+    height: 100%;
+    width: 100%;
+    padding: 30px 10px; /* Más espacio arriba/abajo (20px) que en los lados (10px) */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye el espacio entre elementos */
+    align-items: center;
+    gap: 10px; /* Espacio uniforme entre botones (opcional) */
+}
+/* Área de contenido scrollable */
+#Page {
+    
+    display: flex;
+    flex: 1;
+    margin-left: calc(15% + 20px); /* Ancho del menú + margen izquierdo (10px + 10px) */
+    padding: 10px; /* Espacio interno */
+    border-radius: 15px; /* Bordes redondeados (opcional) */
+    background-color: #ffffff; /* Color de fondo */
+    min-height: 100vh; /* Altura mínima */
+    overflow-y: auto;  /* Habilita scroll vertical si el contenido excede la altura */
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding: 20px;
+    flex-direction: column;
+    gap: 15px;
+}
+#SoftwareInfo{
+    width: 10%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+}
+#ImagenSup{
+    width: 100%;
+}
+#ImagenSup:hover{
+    opacity: 40%;
+    cursor: pointer;
+}
+.menubtn{
+    color: #699cf2;
+    background-color: white;
+    width: 85%;
+    height: 8%;
+    border: solid, #004aad, 1px;
+    border-radius: 10px 10px 10px 10px;
+    
+    }
+    .menubtn:hover{
+    color: white;
+    background-color: black;
+    width: 85%;
+    height: 8%;
+    border: solid, #004aad, 1px;
+    cursor: pointer;
+    }
+    /* PRODUCTOS */
+
+
+.product-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-name {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.product-price {
+    color: #004aad;
+}
+
+.product-description {
+    margin: 5px 0 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.product-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.action-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: #004aad;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#btn1:hover{
+    background-color: red;
+}
+#btn2:hover{
+    background-color: lawngreen;
+}
+
+.quantity {
+    min-width: 20px;
+    text-align: center;
+}

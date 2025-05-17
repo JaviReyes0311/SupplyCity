@@ -1,0 +1,244 @@
+#Cuerpo{
+    background-color: #004aad;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye el espacio */
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 20px 0; /* Opcional: añade espacio arriba/abajo */
+    
+}
+#cajaReg{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Sin justify-content: center (ya no es necesario) */
+    margin-top: -15%; /* Opcional: ajusta si necesitas más espacio */
+}
+#softwareInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    margin-top: -10%; /* Empuja este elemento hacia abajo */
+    padding: 20px 0; /* Espacio interno opcional */
+}
+.textinf{
+    color: white;
+    font-size: 20px;
+}
+/* boton */
+/* From Uiverse.io by ernestnash */ 
+.btn{
+    display: inline-block;
+    padding: 0.9rem 1.8rem;
+    font-size: 16px;
+    font-weight: 700;
+    color: #689bf2;
+    border: 3px solid #689bf2;
+    cursor: pointer;
+    position: relative;
+    background-color: white;
+    text-decoration: none;
+    overflow: hidden;
+    z-index: 1;
+    font-family: inherit;
+}
+.btn::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #689bf2;
+    transform: translateX(-100%);
+    transition: all .3s;
+    z-index: -1;
+    
+}
+
+.btn:hover {
+    color: white; /* Cambia el color del texto a blanco en hover */
+}
+
+.btn:hover::before {
+    transform: translateX(0);
+}
+/* termina boton */
+/* From Uiverse.io by ernestnash */ 
+.btn {
+  display: inline-block;
+  padding: 0.9rem 1.8rem;
+  font-size: 16px;
+  font-weight: 700;
+  color: #689bf2;
+  border: 3px solid #689bf2;
+  cursor: pointer;
+  position: relative;
+  background-color: transparent;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+  font-family: inherit;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #689bf2;
+  transform: translateX(-100%);
+  transition: all .3s;
+  z-index: -1;
+}
+
+.btn:hover::before {
+  transform: translateX(0);
+}
+/* tabla */
+/* From Uiverse.io by ernestnash */ 
+.btn {
+  display: inline-block;
+  padding: 0.9rem 1.8rem;
+  font-size: 16px;
+  font-weight: 700;
+  color: #689bf2;
+  border: 3px solid #689bf2;
+  cursor: pointer;
+  position: relative;
+  background-color: transparent;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+  font-family: inherit;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #689bf2;
+  transform: translateX(-100%);
+  transition: all .3s;
+  z-index: -1;
+}
+
+.btn:hover::before {
+  transform: translateX(0);
+}
+/* tabla login */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-bottom: 0.4em;
+    background-color: white;
+    border-radius: 25px;
+    transition: .4s ease-in-out;
+    width: 95%;
+  }
+  
+  .form:hover {
+    transform: scale(1.05);
+    
+  }
+  
+  #heading {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    margin: 2em;
+    color: #689bf2;
+    font-size: 1.2em;
+  }
+  
+  .field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    border-radius: 25px;
+    padding: 0.6em;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #689bf2 ;
+    
+  }
+  
+  .input-icon {
+    height: 1.3em;
+    width: 1.3em;
+    fill: white;
+  }
+  
+  .input-field {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    color:  white;
+  }
+  
+  .form .bton {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-top: 2.5em;
+  }
+  
+  .button1 {
+    padding: 0.5em;
+    padding-left: 1.1em;
+    padding-right: 1.1em;
+    border-radius: 5px;
+    margin-right: 0.5em;
+    border: none;
+    outline: none;
+    transition: .4s ease-in-out;
+    background-color: #252525;
+    color: white;
+  }
+  
+  .button1:hover {
+    background-color: #689bf2;
+    color: white;
+  }
+  
+  #superior{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: start;
+  }
+  #ImagenSup{
+    width: 10%;
+  }
+
+  .close-btn {
+    position: absolute; /* Posicionamiento absoluto respecto al formulario */
+    top: 15px; /* Ajuste vertical */
+    right: 15px; /* Ajuste horizontal */
+    background: none;
+    border: none;
+    color: red;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.close-btn:hover {
+  color: black;
+}

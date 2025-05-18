@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../CSS/EstiloPos.css">
     <script src="../../controlador/JS/ControladorPos.js" defer></script>
 </head>
-<body id="Cuerpo" >
+<body id="Cuerpo">
    <section id="Menu">
     <div id="menuBox">
         <button class="menubtn" id="btnHome">HOME</button>
@@ -20,12 +20,47 @@
         <button class="menubtn" id="Shft">Log out</button>
     </div>
    </section>
-   <section id="Page">
-   </section>
-   <div id="SoftwareInfo">
-    <img src="../IMAGES/LogoAzulClaro.jpg" id="ImagenSup">
-    <p id="InfoSoftware">SupplyCity<br>Beta Version</p>
-
+   <!-- Coloca esto justo después de la sección #Menu y antes de #Page -->
+<div id="top-bar">
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Buscar productos...">
+        <select id="category-filter">
+            <option value="">categorías</option>
+            <!-- Las opciones se llenarán dinámicamente -->
+        </select>
+    </div>
 </div>
+   <section id="Page">
+   
+   </section>
+</div>
+   <!-- Panel del Carrito -->
+   <div id="cart-panel" class="hidden">
+       <div id="cart-header">
+           <h2>Carrito de Compras</h2>
+           <button id="close-cart-btn" class="close-btn">×</button>
+       </div>
+       <div id="cart-items-container">
+           <!-- Los items del carrito se agregarán aquí dinámicamente -->
+       </div>
+       <div id="cart-summary">
+           <div id="cart-total">
+               <span>Total:</span>
+               <span id="total-amount">$0.00</span>
+           </div>
+           <div id="cart-actions">
+               <button id="clear-cart-btn" class="cart-btn">Vaciar Carrito</button>
+               <button id="checkout-btn" class="cart-btn checkout">Pagar</button>
+           </div>
+       </div>
+   </div>
+   <button id="open-cart-btn" class="floating-btn">
+       🛒 <span id="cart-counter">0</span>
+   </button>
+   
+   <div id="SoftwareInfo">
+       <img src="../IMAGES/LogoAzulClaro.jpg" id="ImagenSup" alt="Logo SupplyCity">
+       <p id="InfoSoftware">SupplyCity<br>Beta Version</p>
+   </div>
 </body>
 </html>

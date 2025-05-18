@@ -181,3 +181,114 @@ cursor: pointer;
 .btn-link:hover {
     background: #00388a;
 }
+/* dark theme */
+:root {
+  /* Colores modo claro (default) */
+  --color-fondo: #ffffff;
+  --color-texto: #333333;
+  --color-primario: #004aad;
+  --color-secundario: #f0f0f0;
+  --color-bordes: #e0e0e0;
+  --color-fondo-menu: #004aad;
+  --color-boton-texto: #699cf2;
+  --color-boton-fondo: white;
+  --color-boton-hover-texto: white;
+  --color-boton-hover-fondo: black;
+  --color-info-software: #003a8c;
+  --color-sombra: rgba(0, 0, 0, 0.05);
+  --color-imagen-hover: rgba(255, 255, 255, 0.4);
+}
+
+/* Modo oscuro */
+body.dark-theme {
+  --color-fondo: #121212;
+  --color-texto: #f0f0f0;
+  --color-primario: #1a3a6a;
+  --color-secundario: #1e1e1e;
+  --color-bordes: #444444;
+  --color-fondo-menu: #0d1f3d;
+  --color-boton-texto: #a0c4ff;
+  --color-boton-fondo: #1a1a1a;
+  --color-boton-hover-texto: #004aad;
+  --color-boton-hover-fondo: #e0e0e0;
+  --color-info-software: #699cf2;
+  --color-sombra: rgba(0, 0, 0, 0.2);
+  --color-imagen-hover: rgba(0, 74, 173, 0.4);
+}
+
+/* Aplica las variables a los elementos */
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+#Menu {
+  background-color: var(--color-fondo-menu);
+}
+
+#Page {
+  background-color: var(--color-fondo);
+}
+
+.menubtn {
+  color: var(--color-boton-texto);
+  background-color: var(--color-boton-fondo);
+}
+
+.menubtn:hover {
+  color: var(--color-boton-hover-texto);
+  background-color: var(--color-boton-hover-fondo);
+}
+
+#InfoSoftware {
+  color: var(--color-info-software);
+}
+
+.seccion-ajuste {
+  background: var(--color-fondo);
+  border: 1px solid var(--color-bordes);
+  box-shadow: 0 2px 4px var(--color-sombra);
+}
+
+.seccion-ajuste h3 {
+  color: var(--color-texto);
+}
+
+.seccion-ajuste p {
+  color: var(--color-texto);
+  opacity: 0.8;
+}
+
+.btn-link {
+  background: var(--color-primario);
+}
+
+#ImagenSup:hover {
+  opacity: 0.4;
+  background-color: var(--color-imagen-hover);
+}
+/* Agrega esto a tu CSS para transiciones suaves */
+body, #Menu, .menubtn, .seccion-ajuste, .btn-link {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Estilo para el botón de tema */
+#switchTheme {
+    cursor: pointer;
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--color-primario);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    transition: background 0.3s;
+}
+
+#switchTheme:hover {
+    background: var(--color-boton-hover-fondo);
+    color: var(--color-boton-hover-texto);
+}
+body.dark-theme #ImagenSup {
+    display: none;
+}

@@ -29,7 +29,7 @@ btnUsers.addEventListener('click',function(){
 var btnInv = document.querySelector('#btnInv');
 btnInv.addEventListener('click',function(){
     console.log("prueba");
-    //window.location.href = "../html/Undefined.html";
+    window.location.href = "../html/Inventor.html";
 })
 
 var btnAcnts = document.querySelector('#btnAcnts');
@@ -41,7 +41,8 @@ btnAcnts.addEventListener('click',function(){
 var btnStd = document.querySelector('#btnStd');
 btnStd.addEventListener('click',function(){
     console.log("prueba");
-    //window.location.href = "../html/Undefined.html";
+    window.location.href = "../html/Stadistics.html";
+
 })
 
 var btnShft = document.querySelector('#Shft');
@@ -81,9 +82,12 @@ function cargarUsuarios() {
             thead.innerHTML = `
                 <tr style="background-color: #004aad; color: white;">
                     <th style="padding: 10px; text-align: left; border-radius: 8px 0 0 0;">Email</th>
+                    <th style="padding: 10px; text-align: left;">Nombre</th>
+                    <th style="padding: 10px; text-align: left;">Apellido</th>
                     <th style="padding: 10px; text-align: left;">Tipo de Usuario</th>
-                    <th style="padding: 10px; text-align: left; border-radius: 0 8px 0 0;">Fecha de Creación</th>
-                    <th style="padding: 10px; text-align: center;">Acciones</th>
+                    <th style="padding: 10px; text-align: left;">Fecha de Creación</th>
+                    <th style="padding: 10px; text-align: left; ">Ultimo Acceso</th>
+                    <th style="padding: 10px; text-align: center;border-radius: 0 8px 0 0;">Acciones</th>
                 </tr>
             `;
             tabla.appendChild(thead);
@@ -99,8 +103,11 @@ function cargarUsuarios() {
                 
                 fila.innerHTML = `
                     <td style="padding: 10px;">${usuario.user}</td>
+                    <td style="padding: 10px;">${usuario.Nombre}</td>
+                    <td style="padding: 10px;">${usuario.Apellido}</td>
                     <td style="padding: 10px;">${usuario.Tipo_Usuario}</td>
                     <td style="padding: 10px;">${formatFecha(usuario.Fecha_Creacion)}</td>
+                    <td style="padding: 10px;">${formatFecha(usuario.Ultimo_Login)}</td>
                     <td style="padding: 10px; text-align: center;">
                         <button class="action-btn" id="btn1" style="margin-right: 5px;">✏️</button>
                         <button class="action-btn" id="btn2">🗑️</button>

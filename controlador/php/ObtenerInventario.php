@@ -3,9 +3,9 @@ header('Content-Type: application/json');
 require_once 'conexion.php';
 
 try {
-    $query = "SELECT p.Email AS user, p.Fecha_Creacion, p.Tipo_Usuario, p.Nombre, p.Apellido, Ultimo_Login
-                FROM usuario p
-                ORDER BY p.Id_Usuario;";
+    $query = "SELECT p.Id_Producto AS ID, p.Nombre, p.Precio, p.Stock, p.Id_Categoria, p.Activo
+              FROM producto p
+              ORDER BY p.Id_Producto;";
 
     $result = $conn->query($query);
 
@@ -15,18 +15,17 @@ try {
 
     $productos = [];
     while ($row = $result->fetch_assoc()) {
-        $Users[] = [
-            'user' => $row['user'],
-            'Fecha_Creacion' => $row['Fecha_Creacion'],
-            'Tipo_Usuario' => $row['Tipo_Usuario'],
+        $productos[] = [
+            'ID' => $row['ID'],
             'Nombre' => $row['Nombre'],
-            'Apellido' => $row['Apellido'],
-            'Ultimo_Login' => $row['Ultimo_Login'],
-            
+            'Precio' => $row['Precio'],
+            'Stock' => $row['Stock'],
+            'Id_Categoria' => $row['Id_Categoria'],
+            'Activo' => (bool)$row['Activo']
         ];
     }
 
-    echo json_encode($Users);
+    echo json_encode($productos); // Corregido de $Users a $productos
 
 } catch (Exception $e) {
     http_response_code(500);

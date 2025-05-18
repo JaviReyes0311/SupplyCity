@@ -28,7 +28,7 @@ btnUsers.addEventListener('click',function(){
 var btnInv = document.querySelector('#btnInv');
 btnInv.addEventListener('click',function(){
     console.log("prueba");
-    //window.location.href = "../html/Undefined.html";
+    window.location.href = "../html/Inventor.html";
 })
 
 var btnAcnts = document.querySelector('#btnAcnts');
@@ -40,7 +40,7 @@ btnAcnts.addEventListener('click',function(){
 var btnStd = document.querySelector('#btnStd');
 btnStd.addEventListener('click',function(){
     console.log("prueba");
-    //window.location.href = "../html/Undefined.html";
+    window.location.href = "../html/Stadistics.html";
 })
 
 var btnShft = document.querySelector('#Shft');

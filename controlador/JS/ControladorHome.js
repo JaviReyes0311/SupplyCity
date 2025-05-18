@@ -41,9 +41,9 @@ function setupMenuButtons() {
         'btnStngs': '../html/settings.html',
         'btnPos': '../html/Pos.html',
         'btnUsers': '../html/Users.html',
-        'btnInv': '../html/Inventory.html',
+        'btnInv': '../html/Inventor.html',
         'btnAcnts': '../html/Accounts.html',
-        'btnStd': '../html/Statistics.html',
+        'btnStd': '../html/Stadistics.html',
         'Shft': '../html/login.html'
     };
 

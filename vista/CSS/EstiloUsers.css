@@ -157,3 +157,46 @@ html, body {
     min-width: 20px;
     text-align: center;
 }
+/* busqueda */
+/* Estilos para la barra superior */
+#top-bar {
+    position: fixed;
+    top: 10px;
+    left: calc(15% + 30px); /* Mismo margen que #Page */
+   
+    z-index: 999;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#search-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+#search-input {
+    flex: 3;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+#category-filter {
+    flex: 1;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: white;
+    font-size: 0.9rem;
+    min-width: 150px;
+}
+
+/* Ajuste para el espacio de la barra superior */
+#Page {
+    margin-top: 70px; /* Espacio para la barra de búsqueda */
+    height: calc(100vh - 100px - 70px); /* Ajusta la altura */
+}

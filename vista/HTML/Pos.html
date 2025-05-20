@@ -62,5 +62,75 @@
        <img src="../IMAGES/LogoAzulClaro.jpg" id="ImagenSup" alt="Logo SupplyCity">
        <p id="InfoSoftware">SupplyCity<br>Beta Version</p>
    </div>
+   <!-- Ventana emergente de pago -->
+<div id="ventana-emergente" class="ventana-emergente">
+    <div class="contenedor-principal">
+        <button class="boton-cerrar" id="cerrar-ventana">X</button>
+        
+        <div class="contenedor-icono">
+            <div class="circulo-verde">
+                <span class="icono-verificacion">✓</span>
+            </div>
+        </div>
+        
+        <h2 class="precio" id="monto-total-popup">$0.00</h2>
+        <h2 class="texto-confirmacion">PAY ALL?</h2>
+        <p class="mensaje-agradecimiento">Thank you for your purchase. Select your Payment method.</p>
+        
+        <div class="contenedor-botones">
+            <button type="button" class="boton" id="pago-efectivo">Efectivo</button>
+            <button type="button" class="boton" id="pago-tarjeta">Card</button>
+        </div>
+    </div>
+</div>
+
+<!-- Popup de pago en efectivo -->
+<div id="pago-efectivo-popup" class="ventana-emergente" style="display: none;">
+    <div class="contenedor-pago-efectivo">
+        <button class="boton-cerrar" id="cerrar-efectivo">X</button>
+        <h2 class="total">Total: <span id="total-efectivo">$0.00</span></h2>
+        <div class="campo-entrada">
+            <label for="efectivo">Enter your cash</label>
+            <input type="text" id="efectivo" placeholder="$0.00">
+        </div>
+        <div class="campo-entrada">
+            <label for="propina">Enter your tip %</label>
+            <input type="text" id="propina" placeholder="0">
+        </div>
+        <label class="cambio">Cash change: <span id="cambio-monto">$0.00</span></label>
+        <div class="contenedor-botones">
+            <button class="boton-aceptar" id="confirmar-efectivo">Enter</button>
+            <button class="boton-cancelar" id="cancelar-efectivo">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Popup de pago con tarjeta -->
+<div id="pago-tarjeta-popup" class="ventana-emergente" style="display: none;">
+    <div class="contenedor-pago-tarjeta">
+        <button class="boton-cerrar" id="cerrar-tarjeta">X</button>
+        <h2 class="total">Total: <span id="total-tarjeta">$0.00</span></h2>
+        <div class="campo-entrada">
+            <label for="propina-tarjeta">Enter your tip %</label>
+            <input type="text" id="propina-tarjeta" placeholder="0">
+        </div>
+        <div class="contenedor-botones">
+            <button class="boton-aceptar" id="confirmar-tarjeta">Enter</button>
+            <button class="boton-cancelar" id="cancelar-tarjeta">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Popup de confirmación final -->
+<div id="confirmacion-pago-popup" class="ventana-emergente" style="display: none;">
+    <div class="contenedor-confirmacion-pago">
+        <button class="boton-cerrar" id="cerrar-confirmacion">X</button>
+        <label class="etiqueta-info">You choosed <span id="metodo-pago-texto"></span> <span id="monto-pago-texto">$0.00</span></label>
+        <div class="contenedor-botones">
+            <button class="boton-aceptar" id="confirmar-pago-final">CONFIRM</button>
+            <button class="boton-rechazar" id="cancelar-pago-final">CANCEL</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

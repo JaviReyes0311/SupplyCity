@@ -335,3 +335,260 @@ html, body {
     margin-top: 70px; /* Espacio para la barra de búsqueda */
     height: calc(100vh - 100px - 70px); /* Ajusta la altura */
 }
+/* Estilos base para todos los popups */
+.ventana-emergente {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.contenedor-principal,
+.contenedor-pago-efectivo,
+.contenedor-pago-tarjeta,
+.contenedor-confirmacion-pago {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botón de cerrar común a todos los popups */
+.boton-cerrar {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.boton-cerrar:hover {
+    color: #333;
+}
+
+/* Estilos específicos para el popup de pago en efectivo */
+.contenedor-pago-efectivo {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    border: 1px solid #e0e6ed;
+}
+
+.contenedor-pago-efectivo .total {
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 25px 0;
+    color: #2c3e50;
+    font-size: 24px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e6ed;
+}
+
+/* Estilos específicos para el popup de pago con tarjeta */
+.contenedor-pago-tarjeta {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    border: 1px solid #e0e6ed;
+}
+
+.contenedor-pago-tarjeta .total {
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 25px 0;
+    color: #2c3e50;
+    font-size: 24px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e6ed;
+}
+
+/* Estilos específicos para el popup de confirmación */
+.contenedor-confirmacion-pago {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    border: 1px solid #3d566e;
+}
+
+.contenedor-confirmacion-pago .etiqueta-info {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+    color: #ecf0f1;
+}
+
+/* Campos de entrada mejorados */
+.campo-entrada {
+    margin: 25px 0;
+}
+
+.campo-entrada label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 15px;
+}
+
+.campo-entrada input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #d1d8e0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: all 0.3s;
+    background-color: #f8fafc;
+}
+
+.campo-entrada input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* Estilos para el cambio en efectivo */
+.cambio {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 25px 0;
+    color: #2c3e50;
+    padding: 10px;
+    background-color: #e8f4fd;
+    border-radius: 8px;
+}
+
+/* Botones mejorados */
+.contenedor-botones {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.boton-aceptar,
+.boton-cancelar,
+.boton-rechazar {
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.boton-aceptar {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+}
+
+.boton-cancelar {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.boton-rechazar {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.boton-aceptar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.boton-cancelar:hover,
+.boton-rechazar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilos para el icono de verificación */
+.contenedor-icono {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.circulo-verde {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.icono-verificacion {
+    color: #155724;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+/* Textos especiales mejorados */
+.precio {
+    color: #155724;
+    font-size: 32px;
+    margin: 20px 0;
+    font-weight: 700;
+    text-align: center;
+}
+
+.texto-confirmacion {
+    color: #2c3e50;
+    font-size: 24px;
+    margin: 20px 0;
+    text-align: center;
+    font-weight: 600;
+}
+
+.mensaje-agradecimiento {
+    color: #7f8c8d;
+    line-height: 1.6;
+    margin: 25px 0;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 480px) {
+    .contenedor-principal,
+    .contenedor-pago-efectivo,
+    .contenedor-pago-tarjeta,
+    .contenedor-confirmacion-pago {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .contenedor-botones {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .boton-aceptar,
+    .boton-cancelar,
+    .boton-rechazar {
+        width: 100%;
+    }
+}

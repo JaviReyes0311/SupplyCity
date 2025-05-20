@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let productosGlobales = [];
     let categoriasGlobales = [];
     let searchTimeout;
+    let metodoPagoSeleccionado = '';
+    let montoTotal = 0;
+    let propina = 0;
 
     // Elementos del DOM
     const cartPanel = document.getElementById('cart-panel');
@@ -16,12 +19,46 @@ document.addEventListener('DOMContentLoaded', function() {
     const checkoutBtn = document.getElementById('checkout-btn');
     const searchInput = document.getElementById('search-input');
     const categoryFilter = document.getElementById('category-filter');
+    
+    // Elementos del popup de pago principal
+    const ventanaEmergente = document.getElementById('ventana-emergente');
+    const cerrarVentanaBtn = document.getElementById('cerrar-ventana');
+    const montoTotalPopup = document.getElementById('monto-total-popup');
+    const pagoEfectivoBtn = document.getElementById('pago-efectivo');
+    const pagoTarjetaBtn = document.getElementById('pago-tarjeta');
+    
+    // Elementos del popup de pago en efectivo
+    const pagoEfectivoPopup = document.getElementById('pago-efectivo-popup');
+    const cerrarEfectivoBtn = document.getElementById('cerrar-efectivo');
+    const totalEfectivoElement = document.getElementById('total-efectivo');
+    const efectivoInput = document.getElementById('efectivo');
+    const propinaInput = document.getElementById('propina');
+    const cambioMontoElement = document.getElementById('cambio-monto');
+    const confirmarEfectivoBtn = document.getElementById('confirmar-efectivo');
+    const cancelarEfectivoBtn = document.getElementById('cancelar-efectivo');
+    
+    // Elementos del popup de pago con tarjeta
+    const pagoTarjetaPopup = document.getElementById('pago-tarjeta-popup');
+    const cerrarTarjetaBtn = document.getElementById('cerrar-tarjeta');
+    const totalTarjetaElement = document.getElementById('total-tarjeta');
+    const propinaTarjetaInput = document.getElementById('propina-tarjeta');
+    const confirmarTarjetaBtn = document.getElementById('confirmar-tarjeta');
+    const cancelarTarjetaBtn = document.getElementById('cancelar-tarjeta');
+    
+    // Elementos del popup de confirmación final
+    const confirmacionPagoPopup = document.getElementById('confirmacion-pago-popup');
+    const cerrarConfirmacionBtn = document.getElementById('cerrar-confirmacion');
+    const metodoPagoTexto = document.getElementById('metodo-pago-texto');
+    const montoPagoTexto = document.getElementById('monto-pago-texto');
+    const confirmarPagoFinalBtn = document.getElementById('confirmar-pago-final');
+    const cancelarPagoFinalBtn = document.getElementById('cancelar-pago-final');
 
     // Cargar productos y configurar eventos
     cargarProductos();
     configurarEventosMenu();
     configurarEventosCarrito();
     configurarEventosBusqueda();
+    configurarEventosPopup();
 
     // Función para cargar productos
     function cargarProductos() {
@@ -39,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Error al cargar productos');
+                mostrarAlerta('Error al cargar productos', 'error');
             });
     }
 
@@ -211,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
         carrito = carrito.filter(item => item.id !== productId);
         localStorage.setItem('carrito', JSON.stringify(carrito));
         actualizarCarritoUI();
-        filtrarProductos(); // Vuelve a aplicar los filtros actuales
+        filtrarProductos();
     }
 
     // Función para vaciar el carrito
@@ -219,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
         carrito = [];
         localStorage.setItem('carrito', JSON.stringify(carrito));
         actualizarCarritoUI();
-        filtrarProductos(); // Vuelve a aplicar los filtros actuales
+        filtrarProductos();
     }
 
     // Función para actualizar el contador del carrito
@@ -267,14 +304,18 @@ document.addEventListener('DOMContentLoaded', function() {
         
         checkoutBtn.addEventListener('click', () => {
             if (carrito.length === 0) {
-                alert('El carrito está vacío');
+                mostrarAlerta('El carrito está vacío', 'error');
                 return;
             }
-            alert('Proceder al pago. Total: $' + 
-                carrito.reduce((total, item) => {
-                    const producto = productosGlobales.find(p => p.id == item.id);
-                    return total + (producto ? producto.precio * item.quantity : 0);
-                }, 0).toFixed(2));
+            
+            // Calcular el total
+            montoTotal = carrito.reduce((total, item) => {
+                const producto = productosGlobales.find(p => p.id == item.id);
+                return total + (producto ? producto.precio * item.quantity : 0);
+            }, 0);
+            
+            // Mostrar el popup de pago
+            mostrarPopupPago(montoTotal.toFixed(2));
         });
     }
 
@@ -290,5 +331,202 @@ document.addEventListener('DOMContentLoaded', function() {
         if (categoryFilter) {
             categoryFilter.addEventListener('change', filtrarProductos);
         }
+    }
+
+    // Configurar eventos del popup de pago
+    function configurarEventosPopup() {
+        // Popup principal
+        cerrarVentanaBtn.addEventListener('click', cerrarPopupPago);
+        pagoEfectivoBtn.addEventListener('click', () => {
+            metodoPagoSeleccionado = 'efectivo';
+            mostrarPopupEfectivo();
+        });
+        pagoTarjetaBtn.addEventListener('click', () => {
+            metodoPagoSeleccionado = 'tarjeta';
+            mostrarPopupTarjeta();
+        });
+        
+        // Popup de efectivo
+        cerrarEfectivoBtn.addEventListener('click', cerrarPopupEfectivo);
+        confirmarEfectivoBtn.addEventListener('click', confirmarPagoEfectivo);
+        cancelarEfectivoBtn.addEventListener('click', cerrarPopupEfectivo);
+        
+        // Eventos para calcular cambio en tiempo real
+        efectivoInput.addEventListener('input', calcularCambio);
+        propinaInput.addEventListener('input', calcularPropina);
+        
+        // Popup de tarjeta
+        cerrarTarjetaBtn.addEventListener('click', cerrarPopupTarjeta);
+        confirmarTarjetaBtn.addEventListener('click', confirmarPagoTarjeta);
+        cancelarTarjetaBtn.addEventListener('click', cerrarPopupTarjeta);
+        
+        // Popup de confirmación final
+        cerrarConfirmacionBtn.addEventListener('click', cerrarConfirmacionPago);
+        confirmarPagoFinalBtn.addEventListener('click', procesarPagoFinal);
+        cancelarPagoFinalBtn.addEventListener('click', cerrarConfirmacionPago);
+    }
+
+    // Mostrar popup de pago principal
+    function mostrarPopupPago(total) {
+        montoTotalPopup.textContent = `$${total}`;
+        ventanaEmergente.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Cerrar popup de pago principal
+    function cerrarPopupPago() {
+        ventanaEmergente.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Mostrar popup de pago en efectivo
+    function mostrarPopupEfectivo() {
+        cerrarPopupPago();
+        totalEfectivoElement.textContent = `$${montoTotal.toFixed(2)}`;
+        efectivoInput.value = '';
+        propinaInput.value = '';
+        cambioMontoElement.textContent = '$0.00';
+        pagoEfectivoPopup.style.display = 'flex';
+    }
+
+    // Cerrar popup de pago en efectivo
+    function cerrarPopupEfectivo() {
+        pagoEfectivoPopup.style.display = 'none';
+        mostrarPopupPago(montoTotal.toFixed(2));
+    }
+
+    // Mostrar popup de pago con tarjeta
+    function mostrarPopupTarjeta() {
+        cerrarPopupPago();
+        totalTarjetaElement.textContent = `$${montoTotal.toFixed(2)}`;
+        propinaTarjetaInput.value = '';
+        pagoTarjetaPopup.style.display = 'flex';
+    }
+
+    // Cerrar popup de pago con tarjeta
+    function cerrarPopupTarjeta() {
+        pagoTarjetaPopup.style.display = 'none';
+        mostrarPopupPago(montoTotal.toFixed(2));
+    }
+
+    // Mostrar popup de confirmación final
+    function mostrarConfirmacionPago() {
+        // Cerrar todos los popups abiertos
+        pagoEfectivoPopup.style.display = 'none';
+        pagoTarjetaPopup.style.display = 'none';
+        
+        // Configurar texto según método de pago
+        metodoPagoTexto.textContent = metodoPagoSeleccionado === 'efectivo' ? 'efective' : 'card';
+        montoPagoTexto.textContent = `$${(montoTotal + (montoTotal * (propina / 100))).toFixed(2)}`;
+        
+        // Mostrar popup de confirmación
+        confirmacionPagoPopup.style.display = 'flex';
+    }
+
+    // Cerrar popup de confirmación final
+    function cerrarConfirmacionPago() {
+        confirmacionPagoPopup.style.display = 'none';
+        mostrarPopupPago(montoTotal.toFixed(2));
+    }
+
+    // Calcular cambio en pago en efectivo
+    function calcularCambio() {
+        const efectivo = parseFloat(efectivoInput.value.replace('$', '')) || 0;
+        const totalConPropina = montoTotal * (1 + (propina / 100));
+        const cambio = efectivo - totalConPropina;
+        
+        cambioMontoElement.textContent = `$${cambio >= 0 ? cambio.toFixed(2) : '0.00'}`;
+    }
+
+    // Calcular propina en pago en efectivo
+    function calcularPropina() {
+        propina = parseFloat(propinaInput.value) || 0;
+        calcularCambio();
+    }
+
+    // Confirmar pago en efectivo
+    function confirmarPagoEfectivo() {
+        const efectivo = parseFloat(efectivoInput.value.replace('$', '')) || 0;
+        const totalConPropina = montoTotal * (1 + (propina / 100));
+        
+        if (efectivo < totalConPropina) {
+            mostrarAlerta('El efectivo ingresado es menor al total con propina', 'error');
+            return;
+        }
+        
+        mostrarConfirmacionPago();
+    }
+
+    // Confirmar pago con tarjeta
+    function confirmarPagoTarjeta() {
+        propina = parseFloat(propinaTarjetaInput.value) || 0;
+        mostrarConfirmacionPago();
+    }
+
+    // Procesar pago final
+    function procesarPagoFinal() {
+        cerrarConfirmacionPago();
+        cartPanel.classList.add('hidden');
+        
+        // Preparar datos de la venta
+        const productosVendidos = carrito.map(item => {
+            const producto = productosGlobales.find(p => p.id == item.id);
+            return {
+                id: producto.id,
+                nombre: producto.nombre,
+                cantidad: item.quantity,
+                precio: producto.precio,
+                subtotal: producto.precio * item.quantity
+            };
+        });
+        
+        const venta = {
+            fecha: new Date().toISOString(),
+            metodoPago: metodoPagoSeleccionado,
+            total: montoTotal,
+            propina: propina,
+            totalConPropina: montoTotal * (1 + (propina / 100)),
+            productos: productosVendidos
+        };
+        
+        // Enviar datos al servidor
+        fetch('../../controlador/php/procesar_pago.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(venta)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                mostrarAlerta(`Pago con ${metodoPagoSeleccionado} realizado por $${venta.totalConPropina.toFixed(2)}`, 'success');
+                vaciarCarrito();
+            } else {
+                mostrarAlerta(`Error al procesar el pago: ${data.message}`, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            mostrarAlerta('Error al conectar con el servidor', 'error');
+        });
+    }
+
+    // Función para mostrar alertas
+    function mostrarAlerta(mensaje, tipo) {
+        // Implementación básica con alert()
+        alert(`${tipo.toUpperCase()}: ${mensaje}`);
+        
+        // Puedes reemplazar esto con un sistema de notificaciones más elegante
+        /* Ejemplo con notificaciones personalizadas:
+        const notificacion = document.createElement('div');
+        notificacion.className = `notificacion ${tipo}`;
+        notificacion.textContent = mensaje;
+        document.body.appendChild(notificacion);
+        
+        setTimeout(() => {
+            notificacion.remove();
+        }, 3000);
+        */
     }
 });

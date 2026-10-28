@@ -1,0 +1,8 @@
+# Build
+bin/
+obj/
+
+# Secrets locales — NO versionar
+appsettings.Development.json
+appsettings.*.Local.json
+*.user

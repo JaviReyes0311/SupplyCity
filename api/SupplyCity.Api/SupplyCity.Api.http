@@ -1,0 +1,16 @@
+@host = http://localhost:5102
+
+### 1) Login — devuelve un JWT con el claim tenant_id
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@norte.com",
+  "password": "admin123"
+}
+
+### 2) Listar productos del tenant autenticado (usa el token del login)
+GET {{host}}/api/productos
+Authorization: Bearer {{login.response.body.token}}
+Accept: application/json

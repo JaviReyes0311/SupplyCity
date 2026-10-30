@@ -5,17 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SupplyCity</title>
     <link rel="stylesheet" href="../CSS/EstilosCaseback.css">
-    <script src="../../controlador/JS/ControladorCaseback.js" defer></script>
+    <script src="../../controlador/JS/auth.js"></script>
     <script>
-    // Verificar si ya hay un user_id en localStorage
-    if (!localStorage.getItem('user_id') && window.USER_ID) {
-        localStorage.setItem('user_id', window.USER_ID);
-    }
-    // Redirigir a home después de 3 segundos
-    setTimeout(() => {
-        window.location.href = 'Home.html';
-    }, 3000);
+    // Página protegida: sin sesión válida, de vuelta al login.
+    // (no se usa 'defer' para que el guard corra antes de renderizar).
+    Auth.requireAuth();
 </script>
+    <script src="../../controlador/JS/ControladorCaseback.js" defer></script>
 </head>
 <body id="Cuerpo">
     <div id="superior"><img src="../IMAGES/LogoAzul.jpg" id="ImagenSup"></div>

@@ -26,12 +26,23 @@ public sealed class NpgsqlConnectionFactory : IDbConnectionFactory
         var conn = new NpgsqlConnection(_connectionString);
         await conn.OpenAsync(ct);
 
-        // Fija el tenant de la sesión. SET LOCAL no sirve fuera de una transacción,
-        // así que usamos set_config con is_local=false para la sesión completa.
-        // Parametrizado para evitar cualquier inyección por el valor del tenant.
-        await using var cmd = new NpgsqlCommand("SELECT set_config('app.tenant_id', @tid, false);", conn);
-        cmd.Parameters.AddWithValue("tid", tenantId.ToString());
-        await cmd.ExecuteNonQueryAsync(ct);
+        // El usuario del pooler (postgres) tiene BYPASSRLS: saltaría todas las
+        // políticas. Cambiamos al rol 'authenticated', que SÍ respeta RLS, para
+        // que el aislamiento por tenant realmente se aplique.
+        //
+        // Luego fijamos el tenant de la sesión. SET LOCAL no sirve fuera de una
+        // transacción, así que usamos set_config con is_local=false.
+        // El tenant va parametrizado para evitar inyección por su valor.
+        await using (var roleCmd = new NpgsqlCommand("SET ROLE authenticated;", conn))
+        {
+            await roleCmd.ExecuteNonQueryAsync(ct);
+        }
+
+        await using (var cmd = new NpgsqlCommand("SELECT set_config('app.tenant_id', @tid, false);", conn))
+        {
+            cmd.Parameters.AddWithValue("tid", tenantId.ToString());
+            await cmd.ExecuteNonQueryAsync(ct);
+        }
 
         return conn;
     }

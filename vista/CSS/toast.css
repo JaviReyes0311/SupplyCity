@@ -1,0 +1,49 @@
+/* toast.css — estilos de las notificaciones (toast.js) */
+
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none; /* los toasts individuales reactivan clicks */
+}
+
+.toast {
+    min-width: 240px;
+    max-width: 360px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 0;
+    transform: translateX(120%);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast--visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast--success {
+    background-color: #1e9e5a;
+    border-left: 4px solid #0f7d43;
+}
+
+.toast--error {
+    background-color: #d13438;
+    border-left: 4px solid #a52327;
+}
+
+.toast--info {
+    background-color: #115dfc;
+    border-left: 4px solid #0b47c4;
+}

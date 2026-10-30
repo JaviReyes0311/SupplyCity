@@ -12,14 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function displayUserEmail() {
-    
-    const userEmail = localStorage.getItem('userEmail');
+
+    // El nombre viene de la sesión guardada por auth.js tras el login.
+    const session = (typeof Auth !== 'undefined') ? Auth.getSession() : null;
     const userNameElement = document.getElementById('UserName');
-    
-    if (userEmail && userNameElement) {
-        userNameElement.textContent = `Username: ${userEmail}`;
+
+    if (session && userNameElement) {
+        userNameElement.textContent = `Username: ${session.nombre}`;
     } else {
-        console.warn('No se encontró el email del usuario en localStorage');
+        console.warn('No hay sesión activa para mostrar el usuario');
     }
 
     // Verifica si hay un valor almacenado
@@ -53,8 +54,11 @@ function setupMenuButtons() {
         if (button) {
             button.addEventListener('click', function() {
                 if (buttonId === 'Shft') {
-                    // Limpiar localStorage al cerrar sesión
-                    localStorage.removeItem('userEmail');
+                    // Cerrar sesión: limpia el token/sesión y redirige al login.
+                    if (typeof Auth !== 'undefined') {
+                        Auth.logout();
+                        return;
+                    }
                 }
                 window.location.href = menuButtons[buttonId];
             });

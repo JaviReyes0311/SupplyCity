@@ -1,100 +1,113 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Elementos del DOM
+/**
+ * ControladorLogin.js — Maneja el formulario de login contra la API .NET.
+ *
+ * Flujo:
+ *  1. El usuario envía email + password.
+ *  2. Se hace POST /api/auth/login (JSON).
+ *  3. La API responde con { token, userId, tenantId, sucursalId, nombre, tipoUsuario }.
+ *  4. Se guarda la sesión en sessionStorage vía Auth.setSession.
+ *  5. Se redirige a caseback.html.
+ *
+ * El token viaja en el body de la respuesta y se guarda en sessionStorage,
+ * NUNCA en la URL. Requiere que auth.js esté cargado antes que este script.
+ */
+document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('loginForm');
     const btnSignUp = document.getElementById('SignUp');
     const btnForgotPassword = document.getElementById('ForgotPassword');
+    const btnLogin = document.getElementById('Login');
 
-    // Mostrar error si existe en la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const error = urlParams.get('error');
-    if (error) {
-        showError(error);
-        window.history.replaceState({}, document.title, window.location.pathname);
+    // Si ya hay sesión activa, saltar directo (evita re-login innecesario).
+    if (Auth.isAuthenticated()) {
+        window.location.href = 'caseback.html';
+        return;
     }
 
-    // Manejar envío del formulario
     if (loginForm) {
-        loginForm.addEventListener('submit', async function(e) {
+        loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
 
-            // Validación básica en cliente
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
             if (!email || !password) {
                 showError('Por favor complete todos los campos');
                 return;
             }
 
-            try {
-                // Guardar email en localStorage antes de la petición
-                localStorage.setItem('userEmail', email);
-                console.log('Email guardado en localStorage:', email);
+            setLoading(true);
 
-                const response = await fetch('../../controlador/php/Login.php', {
+            try {
+                const response = await fetch(`${Auth.API_BASE}/api/auth/login`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
                 });
 
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta del servidor');
+                if (response.status === 401) {
+                    showError('Credenciales inválidas');
+                    setLoading(false);
+                    return;
                 }
 
-                if (response.redirected) {
-                    window.location.href = response.url;
-                } else {
-                    const data = await response.json();
-                    if (data.success) {
-                        window.location.href = data.redirectUrl || '../../vista/HTML/caseback.html';
-                    } else {
-                        showError(data.message || 'Error en las credenciales');
-                        localStorage.removeItem('userEmail');
-                    }
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                showError('Error de conexión con el servidor');
-                localStorage.removeItem('userEmail');
+
+                const data = await response.json();
+
+                // Validación mínima de la respuesta esperada.
+                if (!data || !data.token || data.tenantId == null) {
+                    throw new Error('Respuesta de login incompleta');
+                }
+
+                Auth.setSession(data);
+
+                // Feedback de éxito antes de redirigir (breve pausa para que se vea).
+                showSuccess(`Bienvenido, ${data.nombre}`);
+                setTimeout(() => {
+                    window.location.href = 'caseback.html';
+                }, 900);
+            } catch (err) {
+                console.error('Error en login:', err);
+                showError('No se pudo conectar con el servidor. Intenta de nuevo.');
+                setLoading(false);
             }
         });
     }
 
-    // Manejar botón SignUp
     if (btnSignUp) {
-        btnSignUp.addEventListener('click', function() {
-            window.location.href = "../html/signup.html";
+        btnSignUp.addEventListener('click', function () {
+            window.location.href = 'signup.html';
         });
     }
 
-    // Manejar botón Forgot Password
     if (btnForgotPassword) {
-        btnForgotPassword.addEventListener('click', function() {
+        btnForgotPassword.addEventListener('click', function () {
             alert('Función de recuperación de contraseña en desarrollo');
         });
     }
 
-    // Función para mostrar errores
-    function showError(message) {
-        const errorElement = document.createElement('div');
-        errorElement.className = 'error-message';
-        errorElement.textContent = message;
-        
-        // Eliminar mensajes anteriores
-        const existingError = document.querySelector('.error-message');
-        if (existingError) {
-            existingError.remove();
+    function setLoading(isLoading) {
+        if (btnLogin) {
+            btnLogin.disabled = isLoading;
+            btnLogin.style.opacity = isLoading ? '0.6' : '1';
         }
-        
-        // Insertar después del formulario
-        if (loginForm) {
-            loginForm.appendChild(errorElement);
+    }
+
+    function showError(message) {
+        if (typeof Toast !== 'undefined') {
+            Toast.error(message);
         } else {
-            alert(message);
+            alert(message); // fallback si toast.js no cargó
+        }
+    }
+
+    function showSuccess(message) {
+        if (typeof Toast !== 'undefined') {
+            Toast.success(message);
         }
     }
 });
